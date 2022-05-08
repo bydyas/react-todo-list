@@ -1,0 +1,11 @@
+@import '../../style/variables.scss';
+
+.app {
+  color: $ivy;
+
+  & .content {
+    margin: 0 auto;
+    width: 960px;
+  }
+  
+}

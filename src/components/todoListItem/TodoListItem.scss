@@ -1,0 +1,41 @@
+@import '../../style/variables.scss';
+
+.todo-item {
+    width: 450px; 
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    background-color: $peach;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    list-style: none;
+    
+    & .title {
+        padding-left: 10px;
+        width: 100%;
+    }
+
+    & .btn {
+        cursor: pointer;
+        padding: 3px 5px;
+        border-width: 1px;
+        border-style: solid;
+        border-radius: 5px;
+        transition: all .3;
+
+        & .b-done {
+            border-color: lightgreen;
+        }
+        & .b-delete {
+            border-color: $red;
+        }
+
+        &:active {
+            transform: scale(0.8);
+        }
+    }
+
+}
+
+.todo-done {
+    background-color: $green;
+}
