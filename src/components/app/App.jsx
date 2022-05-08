@@ -17,13 +17,17 @@ class App extends Component {
     let data = this.state.data.map(item => {
       if (item.id === id) {
         item.completed = !completed;
-        this.todoServ.putTodoList({id: item.id, title: item.title, completed: item.completed});
+        this.todoServ.putTodoListItem({id: item.id, title: item.title, completed: item.completed});
       }
       return item;
     });
     this.updateTodoData(data);
+  }
 
-    console.log(id, completed);
+  onDeleteTodoItemData = (id) => {
+    let data = this.state.data.filter(item => item.id !== id);
+    this.todoServ.deleteTodoListItem(id);
+    this.updateTodoData(data);
   }
 
   updateTodoData = (data) => {
@@ -45,7 +49,10 @@ class App extends Component {
     return (
       <div className="app">
         <div className="content">
-          <TodoList data={this.state.data} onDoneTodoItemData={this.onDoneTodoItemData}/>
+          <TodoList
+            data={this.state.data}
+            onDoneTodoItemData={this.onDoneTodoItemData}
+            onDeleteTodoItemData={this.onDeleteTodoItemData} />
         </div>
       </div>
     )

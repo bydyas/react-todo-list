@@ -31,9 +31,26 @@ class TodoService {
         return await res.json();
     }
 
-    async putTodoList(data) {
+    async putTodoListItem(data) {
         const res = await this.putResource(this.#url, data);
-        console.log(res);
+        console.log('PUT', res);
+    }
+
+    async deleteResource(url, id) {
+        let res = await fetch(`${url}/${id}`, {
+            method: 'DELETE',
+        });
+
+        if (!res.ok) {
+            throw new Error(`Could not fetch ${url}, status: ${res.status}`);
+        }
+
+        return await res.json();
+    }
+
+    async deleteTodoListItem(id) {
+        const res = await this.deleteResource(this.#url, id);
+        console.log('DELETE', res);
     }
 }
 

@@ -1,6 +1,6 @@
 import './TodoListItem.scss';
 
-function TodoListItem({title, completed, onDoneTodoItemData }) {
+function TodoListItem({title, completed, onDoneTodoItemData, onDeleteTodoItemData }) {
     return (
         <li className={`todo-item ${completed ? 'todo-done' : null}`}>
             <button
@@ -13,7 +13,8 @@ function TodoListItem({title, completed, onDoneTodoItemData }) {
                 {title}
             </p>
             <button
-                className='btn b-delete'>
+                className='btn b-delete'
+                onClick={() => onDeleteTodoItemData()}>
                 Delete
             </button>
         </li>

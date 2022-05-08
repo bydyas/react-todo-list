@@ -2,7 +2,7 @@ import TodoListItem from '../todoListItem/TodoListItem';
 
 import './TodoList.scss';
 
-function TodoList({data, onDoneTodoItemData}) {
+function TodoList({data, onDoneTodoItemData, onDeleteTodoItemData}) {
 
     const li = data.map(item => {
         const { id, ...itemProps } = item;
@@ -10,6 +10,7 @@ function TodoList({data, onDoneTodoItemData}) {
             <TodoListItem
                 key={id}
                 onDoneTodoItemData={(completed) => onDoneTodoItemData(id, completed)}
+                onDeleteTodoItemData={() => onDeleteTodoItemData(id)}
                 {...itemProps}/>
         )
     });
