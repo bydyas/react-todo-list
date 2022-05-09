@@ -12,6 +12,29 @@ class TodoService {
 
     async getTodoList() {
         const res = await this.getResource(this.#url);
+        console.log('GET', res);
+        return res;
+    }
+
+    async postResource(url, data) {
+        let res = await fetch(`${url}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (!res.ok) {
+            throw new Error(`Could not fetch ${url}, status: ${res.status}`);
+        }
+
+        return await res.json();
+    }
+
+    async postTodoList(data) {
+        const res = await this.postResource(this.#url, data);
+        console.log('POST', res);
         return res;
     }
 

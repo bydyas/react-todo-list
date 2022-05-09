@@ -2,15 +2,29 @@ import { Component } from 'react';
 
 import TodoServer from '../../services/TodoService';
 import TodoList from '../todoList/TodoList';
+import AddTodoListItem from '../addTodoListItem/AddTodoListItem';
 
 import './App.scss';
 
 class App extends Component {
   todoServ = new TodoServer();
-  state = { data: [] };
+  state = { data: [], maxId: 0 };
 
   errorTodoData = (error) => {
     console.log(error);
+  }
+
+  onAddNewTodoItemData = (title) => {
+    const newTodoItem = {
+      id: this.state.maxId + 1,
+      title,
+      completed: false
+    }
+    
+    let newData = this.state.data;
+    newData.push(newTodoItem);
+    this.updateTodoData(newData);
+    this.todoServ.postTodoList(newTodoItem);
   }
 
   onDoneTodoItemData = (id, completed) => {
@@ -30,8 +44,14 @@ class App extends Component {
     this.updateTodoData(data);
   }
 
-  updateTodoData = (data) => {
-    this.setState({ data });
+  updateTodoData = (newData) => {
+    const idList = [];
+    newData.forEach(todo => {
+      idList.push(todo.id);
+    });
+    const maxId = Math.max(...idList);
+
+    this.setState({ data: newData, maxId });
   }
 
   getTodoData = () => {
@@ -49,6 +69,7 @@ class App extends Component {
     return (
       <div className="app">
         <div className="content">
+          <AddTodoListItem onAddNewTodoItemData={this.onAddNewTodoItemData}/>
           <TodoList
             data={this.state.data}
             onDoneTodoItemData={this.onDoneTodoItemData}
