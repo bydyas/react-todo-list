@@ -2,7 +2,7 @@ import './TodoListItem.scss';
 
 function TodoListItem({title, completed, onDoneTodoItemData, onDeleteTodoItemData }) {
     return (
-        <li className={`todo-item ${completed ? 'todo-done' : null}`}>
+        <li className={`todo-item ${completed ? 'todo-done' : ''}`}>
             <button
                 className='btn b-done'
                 onClick={() => onDoneTodoItemData(completed)}>

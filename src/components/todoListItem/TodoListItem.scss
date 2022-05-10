@@ -1,14 +1,29 @@
 @import '../../style/variables.scss';
 
 .todo-item {
-    width: 450px; 
-    display: flex;
+    width: 400px;display: flex;
     align-items: center;
     padding: 5px 10px;
     background-color: $peach;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     list-style: none;
+    position: relative;
     
+    &::before {
+        content: '';
+        display: block;
+        width: 50px;
+        height: 60px;
+        background-image: url('../../resources/svg/connectorUndone.svg');
+        background-repeat: no-repeat;
+        background-size: contain;
+        position: absolute;
+        top: 50%;
+        right: -50px;
+        z-index: -1;
+        transform: translateY(-90%);
+    }
+
     & .title {
         padding-left: 10px;
         width: 100%;
@@ -38,4 +53,7 @@
 
 .todo-done {
     background-color: $green;
+    &::before {
+        background-image: url('../../resources/svg/connectorDone.svg');
+    }
 }
