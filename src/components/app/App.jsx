@@ -3,15 +3,22 @@ import { Component } from 'react';
 import TodoServer from '../../services/TodoService';
 import TodoList from '../todoList/TodoList';
 import AddTodoListItem from '../addTodoListItem/AddTodoListItem';
+import Preloader from '../preloader/Preloader';
+import GotError from '../gotError/GotError';
 
 import './App.scss';
 
 class App extends Component {
   todoServ = new TodoServer();
-  state = { data: [], maxId: 0 };
+  
+  constructor(props) {
+    super(props);
+    this.state = { data: [], maxId: 0, isLoaded: false, gotError: false };
+  }
 
   errorTodoData = (error) => {
     console.log(error);
+    this.setState({ gotError: true });
   }
 
   onAddNewTodoItemData = (title) => {
@@ -44,14 +51,17 @@ class App extends Component {
     this.updateTodoData(data);
   }
 
-  updateTodoData = (newData) => {
+  findCurrentMaxId = (data) => {
     const idList = [];
-    newData.forEach(todo => {
+    data.forEach(todo => {
       idList.push(todo.id);
     });
-    const maxId = Math.max(...idList);
+    return Math.max(...idList);
+  }
 
-    this.setState({ data: newData, maxId });
+  updateTodoData = (data) => {
+    const maxId = this.findCurrentMaxId(data);
+    this.setState({ data, maxId, isLoaded: true });
   }
 
   getTodoData = () => {
@@ -66,14 +76,18 @@ class App extends Component {
   }
 
   render() {
+    const { data, isLoaded, gotError } = this.state;
+    let showSpinner = !isLoaded ? <Preloader /> : null;
+    let showError = gotError ? <GotError /> : null;
+    let showTodoListContent = (showError || showSpinner) ? null : <TodoList
+                                                  data={data}
+                                                  onDoneTodoItemData={this.onDoneTodoItemData}
+                                                  onDeleteTodoItemData={this.onDeleteTodoItemData} />
     return (
       <div className="app">
         <div className="content">
           <AddTodoListItem onAddNewTodoItemData={this.onAddNewTodoItemData}/>
-          <TodoList
-            data={this.state.data}
-            onDoneTodoItemData={this.onDoneTodoItemData}
-            onDeleteTodoItemData={this.onDeleteTodoItemData} />
+          { showError || showSpinner || showTodoListContent}
         </div>
       </div>
     )
