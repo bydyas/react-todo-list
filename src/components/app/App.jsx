@@ -5,6 +5,7 @@ import TodoList from '../todoList/TodoList';
 import AddTodoListItem from '../addTodoListItem/AddTodoListItem';
 import Preloader from '../preloader/Preloader';
 import GotError from '../gotError/GotError';
+import Header from '../header/Header';
 
 import './App.scss';
 
@@ -86,7 +87,8 @@ class App extends Component {
     return (
       <div className="app">
         <div className="content">
-          <AddTodoListItem onAddNewTodoItemData={this.onAddNewTodoItemData}/>
+          <Header />
+          <AddTodoListItem onAddNewTodoItemData={this.onAddNewTodoItemData} />
           { showError || showSpinner || showTodoListContent}
         </div>
       </div>

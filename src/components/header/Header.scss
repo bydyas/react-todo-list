@@ -1,0 +1,27 @@
+@import '../../style/variables.scss';
+
+.header {
+    margin-left: auto;
+    width: fit-content;
+    padding: 10px;
+    background-color: $peach;
+    position: relative;
+
+    &::before {
+        content: '';
+        display: block;
+        width: 3px;
+        height: 15px;
+        background-color: $peach;
+        position: absolute;
+        bottom: -15px;
+        right: 15px;
+    }
+
+    &__title {
+        text-align: right;
+        font-weight: 900;
+        font-size: 2em;
+        text-transform: uppercase;
+    }
+}
